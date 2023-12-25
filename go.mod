@@ -1,3 +1,3 @@
-module github.com/Dorivika/Blockchain-go
+module github.com/tensor-programming/golang-blockchain
 
 go 1.20
