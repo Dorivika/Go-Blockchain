@@ -1,7 +1,7 @@
 package main
 
 import ("os"
-"github.com/Dorivika/Go-Blockchain/blockchain/cli"
+"github.com/Dorivika/Go-Blockchain/cli"
 )
 
 func main() {
