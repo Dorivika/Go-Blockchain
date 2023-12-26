@@ -22,7 +22,7 @@ func CreateWallets() (*Wallets, error) {
 	return &wallets, err
 }
 
-func (ws *Wallets) GetAllAdresses() []string {
+func (ws *Wallets) GetAllAddresses() []string {
 	var addresses []string
 
 	for address := range ws.Wallets {
@@ -31,6 +31,7 @@ func (ws *Wallets) GetAllAdresses() []string {
 
 	return addresses
 }
+
 
 func (ws *Wallets) AddWallet() string {
 	wallet := MakeWallet()
@@ -77,4 +78,14 @@ func (ws *Wallets) SaveFile() {
 
 	err = os.WriteFile(walletFile, content.Bytes(), 0644)
 	Handle(err)
+}
+
+func ValidateAddress(address string) bool {
+	pubKeyHash := Base58Decode([]byte(address))
+	actualChecksum := pubKeyHash[len(pubKeyHash)-checksumLength:]
+	version := pubKeyHash[0]
+	pubKeyHash = pubKeyHash[1 : len(pubKeyHash)-checksumLength]
+	targetChecksum := Checksum(append([]byte{version}, pubKeyHash...))
+
+	return bytes.Compare(actualChecksum, targetChecksum) == 0
 }
