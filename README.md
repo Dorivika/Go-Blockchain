@@ -11,4 +11,4 @@ Since this is first try at this implementation, I tried to approach at it with m
 5. Since badgerDB only accepts array of bytes or slices of bytes, we have to serialize and deserialize.
 6. Though in the original blockchain implementation each block has it's own separate file for efficiency, this project won't use that mainly because it's a small project
 7. Rather than Badger's natve iterator, implemented my own.
-8. Used Goexit() instead of OSexits so as to give time to badger to proerly garbage collects as the go routines are being shut down. this prevents data corruption.
+8. Used Goexit() instead of os.Exit() so as to give time to badger to proerly garbage collects as the go routines are being shut down. this prevents data corruption.
