@@ -51,7 +51,7 @@ func (tx *Transaction) SetID() {
 	tx.ID = hash[:]
 }
 
-func NewTransactions(from, to string, amount int, chain *BlockChain) *Transaction {
+func NewTransaction(from, to string, amount int, chain *BlockChain) *Transaction {
 	var inputs []TxInput
 	var outputs []TxOutput
 
