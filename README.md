@@ -1,7 +1,7 @@
 # Bitcoin BLockchain in Go (Kinda) 
 Since this is first try at this implementation, I tried to approach at it with my own perpective but that won't mean it lacks basic functionalities.
 
-### Some of the Key Features include Consensus Algorithm, Wallets, Database, Merkle Tree and many more.
+### Some of the Key Features include Consensus Algorithm, Wallets, Database, Merkle Tree and many more. WIP so everything will get better.
 
 ## Functionalities and Design Choices : 
 1. Uses CLI for interaction with the Blockchain.
