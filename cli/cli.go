@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/Dorivika/Go-Blockchain/blockchain"
+	"github.com/Dorivika/Go-Blockchain/wallet"
 )
 
 type CommandLine struct{}
@@ -19,6 +20,8 @@ func (cli *CommandLine) printUsage() {
 	fmt.Println(("createblockchain -address ADDRESS -> creates a blockchain"))
 	fmt.Println(("printchain - prints the blockchain"))
 	fmt.Println(("send -from FROM -to TO -amount -> Send amount from one address to another"))
+	fmt.Println("createwallet - Creates a new wallet")
+	fmt.Println("listaddresses - show the addreses in the local wallet file")
 }
 
 func (cli *CommandLine) validateArgs() {
@@ -79,6 +82,23 @@ func (cli *CommandLine) send(from, to string, amount int) {
 	fmt.Println("Voila!!")
 }
 
+func (cli *CommandLine) listaddresses() {
+	wallets, _ := wallet.CreateWallets()
+	addresses := wallets.GetAllAdresses()
+
+	for _, address := range addresses {
+		fmt.Println(address)
+	}
+}
+
+func (cli *CommandLine) createWallet() {
+	wallets, _ := wallet.CreateWallets()
+	address := wallets.AddWallet()
+	wallets.SaveFile()
+
+	fmt.Printf("New Assigned Address is : %s\n", address)
+}
+
 func (cli *CommandLine) Run() {
 	cli.validateArgs()
 
@@ -86,6 +106,8 @@ func (cli *CommandLine) Run() {
 	createBlockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)
 	sendCmd := flag.NewFlagSet("send", flag.ExitOnError)
 	printChainCmd := flag.NewFlagSet("printchain", flag.ExitOnError)
+	createWalletCmd := flag.NewFlagSet("createwallet", flag.ExitOnError)
+	listAddressesCmd := flag.NewFlagSet("listaddresses", flag.ExitOnError)
 
 	getBalanceAddress := getBalanceCmd.String("address", "", "The address to get balance for")
 	createBlockchainAddress := createBlockchainCmd.String("address", "", "The address to send genesis block reward to")
@@ -114,6 +136,12 @@ func (cli *CommandLine) Run() {
 		if err != nil {
 			log.Panic(err)
 		}
+	case "createwallet":
+		err := createWalletCmd.Parse(os.Args[2:])
+		blockchain.Handle(err)
+	case "listaddresses":
+		err := listAddressesCmd.Parse(os.Args[2:])
+		blockchain.Handle(err)
 	default:
 		cli.printUsage()
 		runtime.Goexit()
@@ -148,4 +176,11 @@ func (cli *CommandLine) Run() {
 		cli.send(*sendFrom, *sendTo, *sendAmount)
 	}
 
+	if createWalletCmd.Parsed() {
+		cli.createWallet()
+	}
+
+	if listAddressesCmd.Parsed() {
+		cli.listaddresses()
+	}
 }
