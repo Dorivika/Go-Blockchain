@@ -1,4 +1,4 @@
-# Bitcoin BLockchain in Go (Kinda) 
+# POW BLockchain in Go (Kinda) 
 Since this is first try at this implementation, I tried to approach at it with my own perpective but that won't mean it lacks basic functionalities.
 
 *Key thing to note : Use Go version 1.18.1 because ecdsa.GenerateKey stopped being dterministic with v1.20 and elliptic.P256() was deprecated.*
